@@ -1,9 +1,9 @@
 const { query } = require('../config/database');
 
 /**
- * Find user by email address
- * @param {string} email - User email address
- * @returns {Promise<Object|null>} User object or null if not found
+ * E-posta adresine göre kullanıcıyı getirir
+ * @param {string} email 
+ * @returns {Promise<Object|null>} -Kullanıcı nesnesi döner, bulunamazsa null döner
  */
 const findByEmail = async (email) => {
   const sql = 'SELECT id, email, password_hash, is_verified FROM users WHERE email = ?';
@@ -23,10 +23,10 @@ const findByEmail = async (email) => {
 };
 
 /**
- * Create a new user
- * @param {string} email - User email address
- * @param {string} passwordHash - Hashed password
- * @returns {Promise<number>} Created user ID
+ * Yeni kullanıcı oluşturur
+ * @param {string} email 
+ * @param {string} passwordHash 
+ * @returns {Promise<number>} 
  */
 const create = async (email, passwordHash) => {
   const sql = 'INSERT INTO users (email, password_hash, is_verified) VALUES (?, ?, 0)';
@@ -35,9 +35,9 @@ const create = async (email, passwordHash) => {
 };
 
 /**
- * Update user verification status
- * @param {number} userId - User ID
- * @param {boolean} isVerified - Verification status
+ * Kullanıcının e-posta doğrulama durumunu günceller
+ * @param {number} userId 
+ * @param {boolean} isVerified 
  * @returns {Promise<void>}
  */
 const updateVerificationStatus = async (userId, isVerified) => {

@@ -1,7 +1,4 @@
--- Email Verification Backend Database Schema
--- This script creates the necessary tables for user registration and email verification
 
--- Create users table
 CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(255) UNIQUE NOT NULL,
@@ -11,7 +8,6 @@ CREATE TABLE IF NOT EXISTS users (
   INDEX idx_email (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Create email_tokens table
 CREATE TABLE IF NOT EXISTS email_tokens (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL,

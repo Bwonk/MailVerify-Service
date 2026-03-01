@@ -1,12 +1,14 @@
 const { query } = require('../config/database');
 
 /**
- * Create a new email verification token
- * @param {number} userId - User ID
- * @param {string} token - Verification token
- * @param {Date} expiresAt - Token expiration date
- * @returns {Promise<number>} Created token ID
+ * //
+ * @param {number} userId 
+ * @param {string} token 
+ * @param {Date} expiresAt 
+ * @returns {Promise<number>} 
  */
+
+// Yeni e-posta doğrulama tokenı oluşturur
 const create = async (userId, token, expiresAt) => {
   const sql = 'INSERT INTO email_tokens (user_id, token, expires_at) VALUES (?, ?, ?)';
   const result = await query(sql, [userId, token, expiresAt]);
@@ -14,10 +16,11 @@ const create = async (userId, token, expiresAt) => {
 };
 
 /**
- * Find token by token string with user information
- * @param {string} token - Verification token
- * @returns {Promise<Object|null>} Token object with user info or null if not found
+ * // Tokena göre doğrulama kaydı ve kullanıcı bilgisini getirir
+ * @param {string} token 
+ * @returns {Promise<Object|null>} 
  */
+
 const findByToken = async (token) => {
   const sql = `
     SELECT 
@@ -53,8 +56,8 @@ const findByToken = async (token) => {
 };
 
 /**
- * Mark token as used
- * @param {number} tokenId - Token ID
+ * Kullanılmış tokenı işaretler
+ * @param {number} tokenId - 
  * @returns {Promise<void>}
  */
 const markAsUsed = async (tokenId) => {
@@ -63,7 +66,7 @@ const markAsUsed = async (tokenId) => {
 };
 
 /**
- * Delete expired and used tokens
+ * Süresi dolmuş veya kullanılmış tokenları siler
  * @returns {Promise<void>}
  */
 const deleteExpiredTokens = async () => {

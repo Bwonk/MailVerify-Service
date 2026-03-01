@@ -8,22 +8,22 @@ const { AppError } = require('../utils/errors');
 const SALT_ROUNDS = 10;
 
 /**
- * Register a new user or resend verification for unverified user
- * @param {string} email - User email address
- * @param {string} password - User password
+ * Yeni kullanıcı kaydı oluşturur veya doğrulanmamış kullanıcıya doğrulama e-postası gönderir
+ * @param {string} email 
+ * @param {string} password 
  * @returns {Promise<{success: boolean, message: string}>}
  */
 const register = async (email, password) => {
-  // Check if user already exists
+// Kullanıcının zaten kayıtlı olup olmadığını kontrol eder
   const existingUser = await userRepository.findByEmail(email);
   
   if (existingUser) {
-    // If user exists and is verified, return error
+    
     if (existingUser.isVerified) {
       throw new AppError('Email already registered', 400);
     }
     
-    // If user exists but is unverified, generate new token and send email
+    // Kullanıcı var ancak doğrulanmamışsa yeni doğrulama tokenı oluşturup e-posta gönderir
     const token = tokenService.generateToken();
     const expiresAt = tokenService.getExpirationDate();
     await tokenRepository.create(existingUser.id, token, expiresAt);
@@ -35,11 +35,11 @@ const register = async (email, password) => {
     };
   }
   
-  // User doesn't exist, create new user
+// Kullanıcı mevcut değilse yeni kullanıcı oluşturur
   const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
   const userId = await userRepository.create(email, passwordHash);
   
-  // Generate token and send verification email
+// Doğrulama tokenı oluşturur ve doğrulama e-postası gönderir
   const token = tokenService.generateToken();
   const expiresAt = tokenService.getExpirationDate();
   await tokenRepository.create(userId, token, expiresAt);
@@ -57,15 +57,13 @@ const register = async (email, password) => {
  * @returns {Promise<{success: boolean, message: string}>}
  */
 const verifyEmail = async (token) => {
-  // Find token in database
+  
   const tokenData = await tokenRepository.findByToken(token);
   
-  // Validate token exists
   if (!tokenData) {
     throw new AppError('Invalid or expired token', 400);
   }
   
-  // Validate token is not used
   if (tokenData.used) {
     throw new AppError('Token already used', 400);
   }
