@@ -10,8 +10,7 @@ const config = require('../config/env');
  * @throws {Error} If email sending fails
  */
 const sendVerificationEmail = async (toEmail, token) => {
-  const verificationLink = `${config.APP_BASE_URL}/verify-email?token=${token}`;
-  
+  const verificationLink = `https://api.yigitlabs.com/api/auth/verify-email?token=${token}`;
   const emailBody = `Hello,
 
 Thank you for registering! Please verify your email address by clicking the link below:

@@ -16,7 +16,8 @@ const requiredEnvVars = [
   'AWS_ACCESS_KEY_ID',
   'AWS_SECRET_ACCESS_KEY',
   'SES_FROM_EMAIL',
-  'APP_BASE_URL'
+  'APP_BASE_URL' ,
+  'API_BASE_URL'
 ];
 
 // Validate all required environment variables
@@ -41,5 +42,6 @@ module.exports = {
   AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
   SES_FROM_EMAIL: process.env.SES_FROM_EMAIL,
-  APP_BASE_URL: process.env.APP_BASE_URL
+  APP_BASE_URL: process.env.APP_BASE_URL ,
+  API_BASE_URL: process.env.API_BASE_URL
 };

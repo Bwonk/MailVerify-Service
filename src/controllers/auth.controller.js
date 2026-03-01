@@ -1,56 +1,56 @@
+// src/controllers/auth.controller.js
 const authService = require('../services/auth.service');
 const { successResponse } = require('../utils/response');
+const config = require('../config/env');
 
-/**
- * Register controller - handles user registration
- * @param {object} req - Express request object
- * @param {object} res - Express response object
- * @param {function} next - Express next middleware function
- */
 const register = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const result = await authService.register(email, password);
-    res.status(200).json(successResponse(result.message));
+    return res.status(200).json(successResponse(result.message));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
-/**
- * Verify email controller - handles email verification
- * @param {object} req - Express request object
- * @param {object} res - Express response object
- * @param {function} next - Express next middleware function
- */
+// ✅ Mailden gelen GET isteği burada karşılıyoruz
 const verifyEmail = async (req, res, next) => {
   try {
-    const { token } = req.body;
-    const result = await authService.verifyEmail(token);
-    res.status(200).json(successResponse(result.message));
+    console.log('>>> verifyEmail HIT', {
+      method: req.method,
+      query: req.query,
+    });
+
+    const { token } = req.query;
+
+    if (!token) {
+      console.log('>>> verifyEmail: token YOK');
+      return res.redirect(`${config.APP_BASE_URL}?verify=error`);
+    }
+
+    await authService.verifyEmail(token);
+    console.log('>>> verifyEmail: SUCCESS');
+
+    return res.redirect(`${config.APP_BASE_URL}?verify=ok`);
   } catch (error) {
-    next(error);
+    console.error('>>> verifyEmail ERROR', error);
+    return res.redirect(`${config.APP_BASE_URL}?verify=error`);
   }
 };
 
-/**
- * Resend verification controller - handles resending verification email
- * @param {object} req - Express request object
- * @param {object} res - Express response object
- * @param {function} next - Express next middleware function
- */
 const resendVerification = async (req, res, next) => {
   try {
     const { email } = req.body;
     const result = await authService.resendVerification(email);
-    res.status(200).json(successResponse(result.message));
+    return res.status(200).json(successResponse(result.message));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
 module.exports = {
   register,
   verifyEmail,
-  resendVerification
+  resendVerification,
 };
+
