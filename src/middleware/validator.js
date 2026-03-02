@@ -1,8 +1,7 @@
 const { ValidationError } = require('../utils/errors');
 
 /**
- * Middleware factory that validates request body against a Zod schema
- * @param {import('zod').ZodSchema} schema - Zod schema to validate against
+ * @param {import('zod').ZodSchema} schema - Doğrulama için kullanılacak Zod şeması
  * @returns {Function} Express middleware function
  */
 const validate = (schema) => {

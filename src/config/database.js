@@ -1,9 +1,6 @@
 const mysql = require('mysql2');
 const config = require('./env');
 
-/**
- * MySQL connection pool configuration
- */
 const pool = mysql.createPool({
   host: config.DB_HOST,
   user: config.DB_USER,
@@ -15,7 +12,6 @@ const pool = mysql.createPool({
 });
 
 /**
- * Query wrapper function with promise support
  * @param {string} sql - SQL query string
  * @param {Array} params - Query parameters
  * @returns {Promise} Query results

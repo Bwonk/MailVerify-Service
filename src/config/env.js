@@ -1,10 +1,5 @@
 require('dotenv').config();
 
-/**
- * Validates and exports environment configuration
- * Throws error if any required variable is missing
- */
-
 const requiredEnvVars = [
   'NODE_ENV',
   'PORT',
@@ -20,7 +15,6 @@ const requiredEnvVars = [
   'API_BASE_URL'
 ];
 
-// Validate all required environment variables
 const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
 
 if (missingVars.length > 0) {
@@ -30,7 +24,6 @@ if (missingVars.length > 0) {
   );
 }
 
-// Export validated configuration object
 module.exports = {
   NODE_ENV: process.env.NODE_ENV,
   PORT: parseInt(process.env.PORT, 10),

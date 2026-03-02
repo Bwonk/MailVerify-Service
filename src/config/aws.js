@@ -1,9 +1,9 @@
 const { SESClient } = require('@aws-sdk/client-ses');
 const config = require('./env');
 
-/**
- * AWS SES client configuration
- */
+
+// AWS SES client configuration
+
 const sesClient = new SESClient({
   region: config.AWS_REGION,
   credentials: {

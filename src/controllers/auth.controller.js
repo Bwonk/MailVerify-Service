@@ -13,7 +13,7 @@ const register = async (req, res, next) => {
   }
 };
 
-// ✅ Mailden gelen GET isteği burada karşılıyoruz
+// Mailden gelen GET isteği burada karşılıyoruz
 const verifyEmail = async (req, res, next) => {
   try {
     console.log('>>> verifyEmail HIT', {
