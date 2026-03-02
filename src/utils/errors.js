@@ -1,6 +1,6 @@
 /**
- * Custom error class for validation errors
- * Used when input validation fails (Zod schema validation)
+ * Doğrulama hataları için özel hata sınıfı
+ * Girdi doğrulaması başarısız olduğunda kullanılır (Zod şema doğrulaması)
  */
 class ValidationError extends Error {
   constructor(message) {
@@ -11,8 +11,8 @@ class ValidationError extends Error {
 }
 
 /**
- * Custom error class for application errors
- * Used for known business logic errors with specific status codes
+ * Uygulama hataları için özel hata sınıfı
+ * Belirli durum kodlarına sahip iş mantığı hatalarında kullanılır
  */
 class AppError extends Error {
   constructor(message, statusCode = 500) {

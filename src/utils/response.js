@@ -1,8 +1,8 @@
 /**
- * Format success response
- * @param {string} message - Success message
- * @param {object} data - Optional data to include in response
- * @returns {object} Formatted success response
+ * Başarılı yanıtı biçimlendirir
+ * @param {string} message 
+ * @param {object} data 
+ * @returns {object} 
  */
 function successResponse(message, data = null) {
   const response = {
@@ -18,9 +18,9 @@ function successResponse(message, data = null) {
 }
 
 /**
- * Format error response
- * @param {string} message - Error message
- * @returns {object} Formatted error response
+ * Hata yanıtını biçimlendirir
+ * @param {string} message - Hata mesajı
+ * @returns {object} 
  */
 function errorResponse(message) {
   return {

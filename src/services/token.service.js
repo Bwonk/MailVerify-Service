@@ -1,16 +1,16 @@
 const crypto = require('crypto');
 
 /**
- * Generate a cryptographically secure random token
- * @returns {string} 64-character hexadecimal token
+ *  Kriptografik olarak rastgele bir token üretir
+ * @returns {string} 64 karakterlik hexadecimal
  */
 const generateToken = () => {
   return crypto.randomBytes(32).toString('hex');
 };
 
 /**
- * Get expiration date for token (24 hours from now)
- * @returns {Date} Expiration date
+ * Token için son geçerlilik tarihini hesaplar (şu andan itibaren 24 saat)
+ * @returns {Date} Son geçerlilik tarihi 
  */
 const getExpirationDate = () => {
   const expirationDate = new Date();

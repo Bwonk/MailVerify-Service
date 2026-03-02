@@ -3,26 +3,26 @@ const { sesClient } = require('../config/aws');
 const config = require('../config/env');
 
 /**
- * Send verification email to user
- * @param {string} toEmail - Recipient email address
- * @param {string} token - Verification token
+ * 
+ * @param {string} toEmail 
+ * @param {string} token 
  * @returns {Promise<void>}
- * @throws {Error} If email sending fails
+ * @throws {Error} 
  */
 const sendVerificationEmail = async (toEmail, token) => {
   const verificationLink = `https://api.yigitlabs.com/api/auth/verify-email?token=${token}`;
-  const emailBody = `Hello,
+  const emailBody = `Merhaba,
 
-Thank you for registering! Please verify your email address by clicking the link below:
+YigitLabs'e kayıt olduğunuz için teşekkür ederiz. E-posta adresinizi doğrulamak için aşağıdaki bağlantıya tıklayın:
 
 ${verificationLink}
 
-This link will expire in 24 hours.
+Bu bağlantı 24 saat boyunca geçerlidir.
 
-If you didn't create an account, please ignore this email.
+Eğer bu hesabı siz oluşturmadıysanız, bu e-postayı dikkate almayabilirsiniz.
 
-Best regards,
-YigitLabs Team`;
+İyi günler dileriz,
+YigitLabs Ekibi`;
 
   const params = {
     Source: config.SES_FROM_EMAIL,
@@ -31,7 +31,7 @@ YigitLabs Team`;
     },
     Message: {
       Subject: {
-        Data: 'Verify Your Email Address',
+        Data: 'E-posta Adresinizi Doğrulayın',
         Charset: 'UTF-8'
       },
       Body: {
@@ -47,8 +47,8 @@ YigitLabs Team`;
     const command = new SendEmailCommand(params);
     await sesClient.send(command);
   } catch (error) {
-    console.error('Failed to send verification email:', error);
-    throw new Error('Failed to send verification email');
+    console.error('Doğrulama e-postası gönderilemedi:', error);
+    throw new Error('Doğrulama e-postası gönderilemedi');
   }
 };
 

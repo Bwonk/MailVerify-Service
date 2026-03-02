@@ -52,10 +52,11 @@ const register = async (email, password) => {
 };
 
 /**
- * Verify user email with token
- * @param {string} token - Verification token
+ * Doğrulama tokenı ile kullanıcının e-posta adresini doğrular
+ * @param {string} token 
  * @returns {Promise<{success: boolean, message: string}>}
  */
+
 const verifyEmail = async (token) => {
   
   const tokenData = await tokenRepository.findByToken(token);
@@ -68,16 +69,16 @@ const verifyEmail = async (token) => {
     throw new AppError('Token already used', 400);
   }
   
-  // Validate token is not expired
+  // Tokenın süresinin dolmadığını kontrol eder
   const now = new Date();
   if (now > tokenData.expiresAt) {
     throw new AppError('Invalid or expired token', 400);
   }
   
-  // Update user verification status
+  // Kullanıcının e-posta doğrulama durumunu günceller
   await userRepository.updateVerificationStatus(tokenData.userId, true);
   
-  // Mark token as used
+  // Tokenı kullanılmış olarak işaretler
   await tokenRepository.markAsUsed(tokenData.id);
   
   return {
@@ -87,15 +88,15 @@ const verifyEmail = async (token) => {
 };
 
 /**
- * Resend verification email to user
- * @param {string} email - User email address
+ *  Kullanıcıya doğrulama e-postası yeniden gönderir
+ * @param {string} email 
  * @returns {Promise<{success: boolean, message: string}>}
  */
 const resendVerification = async (email) => {
-  // Find user by email
+  // E-posta adresine göre kullanıcıyı getirir
   const user = await userRepository.findByEmail(email);
   
-  // If user doesn't exist or is already verified, return success (enumeration protection)
+  // Kullanıcı bulunamazsa veya zaten doğrulanmışsa güvenlik nedeniyle başarılı yanıt döndürür (enumeration saldırılarını önlemek için)
   if (!user || user.isVerified) {
     return {
       success: true,
@@ -103,7 +104,7 @@ const resendVerification = async (email) => {
     };
   }
   
-  // User exists and is unverified, generate new token and send email
+  // Kullanıcı mevcut ancak doğrulanmamışsa yeni doğrulama tokenı oluşturur ve e-posta gönderir
   const token = tokenService.generateToken();
   const expiresAt = tokenService.getExpirationDate();
   await tokenRepository.create(user.id, token, expiresAt);
